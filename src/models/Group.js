@@ -1,12 +1,12 @@
 const { sequelize } = require('../db/sequelize');
 const { DataTypes, Model } = require('sequelize');
 
-class Role extends Model {
-    static tableName = "roles";
-    static modelName = "Role";
+class Group extends Model {
+    static tableName = "groups";
+    static modelName = "Group";
 }
 
-Role.init({
+Group.init({
     id: {
         type: DataTypes.BIGINT,
         autoIncrement: true,
@@ -18,11 +18,11 @@ Role.init({
         allowNull: false
     },
 },{
-    tableName: Role.tableName,
+    tableName: Group.tableName,
     sequelize,
-    modelName: Role.modelName,
-    timestamps: false
+    modelName: Group.modelName,
+    updatedAt: 'updated_at',
+    createdAt:'created_at'
 })
 
-
-module.exports = Role;
+module.exports = Group;
