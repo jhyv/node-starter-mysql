@@ -89,6 +89,11 @@ Employee.init({
             key: 'code',
             model: 'Province'
         }
+    },
+    active: {
+        type: DataTypes.TINYINT(1),
+        allowNull: false,
+        defaultValue: '1'
     }
 },{
     tableName: 'employees',
