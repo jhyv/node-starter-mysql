@@ -1,17 +1,18 @@
 const jwt = require('jsonwebtoken');
 
 
-function authorize(user, expiresIn="2h") {
+const authorize = (user, expiresIn="7d") => {
     return new Promise((resolve, reject) => {
-        jwt.sign(user, process.env.JWT_SECRET, { expiresIn: expiresIn },(err, token) => {
+        jwt.sign({user, iat: Date.now() }, process.env.JWT_SECRET, { expiresIn: expiresIn,  },(err, token) => {
             if(err) reject(err)
+            console.log("GENERATED NEW TOKEN", token);
 
             resolve(token);
         })
     })
 }
 
-function verifyToken(req, res, next) {
+const verifyToken = (req, res, next) => {
     const token = req.headers["authorization"].split(" ")[1];
 
     if(!token) {
@@ -21,15 +22,42 @@ function verifyToken(req, res, next) {
     console.log("TOKEN FOUND!", token);
 
     try {
-        const decoded = jwt.verify(token, process.env.JWT_SECRET);
-        req.auth = decoded
+        jwt.verify(token, process.env.JWT_SECRET,(err, decoded) => {
+            if(err) {
+                if(err.name == "TokenExpiredError") {
+                    res.status(401).send({  message:err.name });
+                }
+            }
+            else {
+                req.auth = decoded
+                return next();
+            }
+
+        });
     } catch (err) {
         return res.status(401).send({ message:"Invalid token" })
     }
-
-    return next();
 }
 
 
+const refreshBearerToken = async (req, res) => {
+    try {
+        console.log("REFRESHING TOKEN")
+        if(req.auth) console.log("User Found",req.auth)
 
-module.exports = { jwt, authorize, verifyToken };
+        const token = await authorize(req.auth).catch(err => {
+            console.log("REFRESH TOKEN FAILED", err);
+        });
+
+        res.json({
+            success: true,
+            message: 'token refreshed!',
+            token: token
+        })
+    } catch (error) {
+        return res.status(401).send({ message: error })
+    }
+}
+
+
+module.exports = { jwt, authorize, verifyToken, refreshBearerToken };

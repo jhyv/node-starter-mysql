@@ -1,11 +1,10 @@
 const User = require('../../models/User');
 const { checkPassword } = require('../../utils/bcrypt');
-const { authorize } = require('../../utils/jwt');
+const { authorize, refreshBearerToken  } = require('../../utils/jwt');
 
 const login = async (req, res) => {
 
     const credentials = req.body;
-    console.log(credentials);
     res.setHeader("Content-Type","application/json")
 
     const user = await User.findOne({
@@ -19,7 +18,6 @@ const login = async (req, res) => {
             message: 'User not found'
         })
     }
-
 
     if(checkPassword(credentials.password,user.password)) {   
         console.log(`Password matched`) 
@@ -40,4 +38,18 @@ const login = async (req, res) => {
     }
 }
 
-module.exports = { login };
+const getAuthUser =  (req, res) => {
+    try {
+        res.json({
+            success: true,
+            message: 'success',
+            data: req.auth
+        })
+    } catch (error) {
+        res.status(500).send({message:error});
+    }
+}
+
+const refreshToken = refreshBearerToken;
+
+module.exports = { login, getAuthUser, refreshToken };
