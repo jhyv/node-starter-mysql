@@ -1,12 +1,9 @@
 const { sequelize } = require('../db/sequelize');
 const { DataTypes, Model } = require('sequelize');
-const Role = require('./Role');
 const Employee = require('./Employee');
+const Role = require('./Role');
 
-class User extends Model {
-    static tableName = "users";
-    static modelName = "User";
-}
+class User extends Model {}
 
 User.init({
     id: {
@@ -39,15 +36,15 @@ User.init({
         type: DataTypes.INTEGER,
         allowNull: false,
         references: {
-            tableName: Role.tableName,
-            key: Role.primaryKeyAttribute,
-            model: Role
+            tableName: 'roles',
+            key: 'id',
+            model: 'Role'
         }
     }
 },{
-    tableName: User.tableName,
+    tableName: 'users',
     sequelize,
-    modelName: User.modelName,
+    modelName: 'User',
     updatedAt: 'updated_at',
     createdAt:'created_at'
 })

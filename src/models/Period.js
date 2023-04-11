@@ -2,10 +2,7 @@ const { sequelize } = require('../db/sequelize');
 const { DataTypes, Model } = require('sequelize');
 const Soa = require('./Soa');
 
-class Period extends Model {
-    static tableName = "periods";
-    static modelName = "Period";
-}
+class Period extends Model {}
 
 Period.init({
     id: {
@@ -28,16 +25,16 @@ Period.init({
         defaultValue: "0"
     },
 },{
-    tableName: Period.tableName,
+    tableName: 'periods',
     sequelize,
-    modelName: Period.modelName,
+    modelName: 'Period',
     updatedAt: 'updated_at',
     createdAt:'created_at'
 })
 
 Period.hasMany(Soa,{
     foreignKey: 'period_id',
-    targetKey: Period.primaryKeyAttribute,
+    targetKey: 'id',
     as: 'soa_list'
 })
 

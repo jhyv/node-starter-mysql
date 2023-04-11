@@ -1,10 +1,7 @@
 const { sequelize } = require('../db/sequelize');
 const { DataTypes, Model } = require('sequelize');
 
-class Group extends Model {
-    static tableName = "groups";
-    static modelName = "Group";
-}
+class Group extends Model {}
 
 Group.init({
     id: {
@@ -18,9 +15,9 @@ Group.init({
         allowNull: false
     },
 },{
-    tableName: Group.tableName,
+    tableName: 'groups',
     sequelize,
-    modelName: Group.modelName,
+    modelName: 'Group',
     updatedAt: 'updated_at',
     createdAt:'created_at'
 })

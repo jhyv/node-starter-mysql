@@ -1,6 +1,5 @@
 const { sequelize } = require('../db/sequelize');
 const { DataTypes, Model } = require('sequelize');
-const Employee = require('./Employee');
 const Group = require('./Group');
 
 class EmployeeDetail extends Model {
@@ -19,9 +18,9 @@ EmployeeDetail.init({
         type: DataTypes.BIGINT,
         allowNull: false,
         references: {
-            tableName: Employee.tableName,
+            tableName: 'employees',
             key: 'employee_no',
-            model: Employee
+            model: 'Employee'
         }
     },
     salary: {
@@ -44,15 +43,15 @@ EmployeeDetail.init({
         type: DataTypes.INTEGER,
         allowNull: false,
         references: {
-            tableName: Group.tableName,
-            key: Group.primaryKeyAttribute,
-            model: Group
+            tableName: 'groups',
+            key: 'id',
+            model: 'Group'
         }
     }
 },{
-    tableName: EmployeeDetail.tableName,
+    tableName: 'employee_details',
     sequelize,
-    modelName: EmployeeDetail.modelName,
+    modelName: 'EmployeeDetail',
     updatedAt: 'updated_at',
     createdAt:'created_at'
 })

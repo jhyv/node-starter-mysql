@@ -1,12 +1,8 @@
 const { sequelize } = require('../db/sequelize');
 const { DataTypes, Model } = require('sequelize');
-const Employee = require('./Employee');
 const AttendanceDetail = require('./AttendanceDetail');
 
-class Attendance extends Model {
-    static tableName = "attendances";
-    static modelName = "Attendance";
-}
+class Attendance extends Model {}
 
 Attendance.init({
     id: {
@@ -19,9 +15,9 @@ Attendance.init({
         type: DataTypes.BIGINT,
         allowNull: false,
         references: {
-            tableName: Employee.tableName,
+            tableName: 'employees',
             key: 'employee_no',
-            model: Employee
+            model: 'Employee'
         }
     },
     clocked_time: {
@@ -33,16 +29,16 @@ Attendance.init({
         allowNull: true
     },
 },{
-    tableName: Attendance.tableName,
+    tableName: 'attendances',
     sequelize,
-    modelName: Attendance.modelName,
+    modelName: 'Attendance',
     updatedAt: 'updated_at',
     createdAt:'created_at'
 })
 
 Attendance.hasMany(AttendanceDetail,{
     foreignKey: 'attendance_id',
-    targetKey: Attendance.primaryKeyAttribute,
+    targetKey: 'id',
     as: 'attendance_details'
 })
 

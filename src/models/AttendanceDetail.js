@@ -2,10 +2,7 @@ const { sequelize } = require('../db/sequelize');
 const { DataTypes, Model } = require('sequelize');
 const Attendance = require('./Attendance');
 
-class AttendanceDetail extends Model {
-    static tableName = "attendance_details";
-    static modelName = "AttendanceDetail";
-}
+class AttendanceDetail extends Model {}
 
 AttendanceDetail.init({
     id: {
@@ -18,9 +15,9 @@ AttendanceDetail.init({
         type: DataTypes.BIGINT,
         allowNull: false,
         references: {
-            model: Attendance,
-            tableName: Attendance.tableName,
-            key: Attendance.primaryKeyAttribute
+            model: 'Attendance',
+            tableName: 'attendances',
+            key: 'id'
         }
     },
     clocked_time: {
@@ -32,16 +29,16 @@ AttendanceDetail.init({
         allowNull: true
     },
 },{
-    tableName: AttendanceDetail.tableName,
+    tableName: 'attendance_details',
     sequelize,
-    modelName: AttendanceDetail.modelName,
+    modelName: 'AttendanceDetail',
     updatedAt: 'updated_at',
     createdAt:'created_at'
 })
 
 AttendanceDetail.belongsTo(Attendance,{
     foreignKey:'attendance_id',
-    targetKey: Attendance.primaryKeyAttribute,
+    targetKey: 'id',
     as: 'attendance'
 })
 

@@ -1,15 +1,11 @@
 const { sequelize } = require('../db/sequelize');
 const { DataTypes, Model } = require('sequelize');
-const User = require('./User');
-const Municipality = require('./Municipality');
 const Province = require('./Province');
 const Barangay = require('./Barangay');
+const Municipality = require('./Municipality');
 const EmployeeDetail = require('./EmployeeDetail');
 
-class Employee extends Model {
-    static tableName = "employees";
-    static modelName = "Employee";
-}
+class Employee extends Model {}
 
 Employee.init({
     id: {
@@ -56,7 +52,7 @@ Employee.init({
         references: {
             tableName: 'users',
             key: 'id',
-            model: User
+            model: 'User'
         }
     },
     employee_no: {
@@ -71,38 +67,38 @@ Employee.init({
         type: DataTypes.BIGINT,
         allowNull: true,
         references: {
-            tableName: Barangay.tableName,
-            key: Barangay.primaryKeyAttribute,
-            model: Barangay
+            tableName: 'barangays',
+            key: 'brgyCode',
+            model: 'Barangay'
         }
     },
     mun_id: {
         type: DataTypes.BIGINT,
         allowNull: true,
         references: {
-            tableName: Municipality.tableName,
-            key: Municipality.primaryKeyAttribute,
-            model: Municipality
+            tableName: 'municipalities',
+            key: 'code',
+            model: 'Municipality'
         }
     },
     prov_id: {
         type: DataTypes.BIGINT,
         allowNull: true,
         references: {
-            tableName: Province.tableName,
-            key: Province.primaryKeyAttribute,
-            model: Province
+            tableName: 'provinces',
+            key: 'code',
+            model: 'Province'
         }
     }
 },{
-    tableName: Employee.tableName,
+    tableName: 'employees',
     sequelize,
-    modelName: Employee.modelName,
+    modelName: 'Employee',
     updatedAt: 'updated_at',
     createdAt:'created_at'
 })
 
-Employee.EmployeeDetail = Employee.belongsTo(EmployeeDetail,{
+Employee.belongsTo(EmployeeDetail,{
     foreignKey: 'employee_no',
     targetKey: 'employee_no',
     as: 'employee_detail'
@@ -110,19 +106,19 @@ Employee.EmployeeDetail = Employee.belongsTo(EmployeeDetail,{
 
 Employee.belongsTo(Barangay,{
     foreignKey: 'brgy_id',
-    targetKey: Barangay.primaryKeyAttribute,
+    targetKey: 'brgyCode',
     as: 'barangay'
 });
 
 Employee.belongsTo(Municipality,{
     foreignKey: 'mun_id',
-    targetKey: Municipality.primaryKeyAttribute,
+    targetKey: 'code',
     as: 'municipality'
 });
 
 Employee.belongsTo(Province,{
     foreignKey: 'prov_id',
-    targetKey: Province.primaryKeyAttribute,
+    targetKey: 'code',
     as: 'province'
 });
 

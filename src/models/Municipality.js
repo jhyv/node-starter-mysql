@@ -2,11 +2,7 @@ const { sequelize } = require('../db/sequelize');
 const { DataTypes, Model } = require('sequelize');
 const Province = require('./Province');
 
-class Municipality extends Model {
-    static tableName = "municipalities";
-    static modelName = "Municipality";
-}
-
+class Municipality extends Model {}
 
 Municipality.init({
     code: {
@@ -22,21 +18,21 @@ Municipality.init({
         type: DataTypes.INTEGER,
         allowNull: false,
         references: {
-            model: Province,
-            tableName: Province.tableName,
+            model: 'Province',
+            tableName: 'provinces',
             key: 'code'
         }
     },
 },{
-    tableName: Municipality.tableName,
+    tableName: 'municipalities',
     sequelize,
-    modelName: Municipality.modelName,
+    modelName: 'Municipality',
     timestamps: false
 })
 
 Municipality.belongsTo(Province,{
     foreignKey: 'provCode',
-    targetKey: Province.primaryKeyAttribute,
+    targetKey: 'code',
     as: 'province'
 });
 

@@ -1,12 +1,9 @@
 const { sequelize } = require('../db/sequelize');
 const { DataTypes, Model } = require('sequelize');
-const Period = require('./Period')
-const Employee = require('./Employee')
+const Employee = require('./Employee');
+const Period = require('./Period');
 
-class Soa extends Model {
-    static tableName = "soa";
-    static modelName = "Soa";
-}
+class Soa extends Model {}
 
 Soa.init({
     id: {
@@ -29,26 +26,26 @@ Soa.init({
         allowNull: false,
         defaultValue: "0"
     },
-    status: {
+    period_id: {
         type: DataTypes.INTEGER,
         allowNull: false,
         references: {
-            model: Period,
-            tableName: Period.tableName,
-            key: Period
+            model: 'Period',
+            tableName: 'periods',
+            key: 'id'
         }
     },
 },{
-    tableName: Soa.tableName,
+    tableName: 'soa',
     sequelize,
-    modelName: Soa.modelName,
+    modelName: 'Soa',
     updatedAt: 'updated_at',
     createdAt:'created_at'
 })
 
 Soa.belongsTo(Period,{
     foreignKey: 'period_id',
-    targetKey: Period.primaryKeyAttribute,
+    targetKey: 'id',
     as: 'period'
 });
 

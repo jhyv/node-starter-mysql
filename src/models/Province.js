@@ -1,11 +1,7 @@
 const { sequelize } = require('../db/sequelize');
 const { DataTypes, Model } = require('sequelize');
 
-class Province extends Model {
-    static tableName = "provinces";
-    static modelName = "Province";
-}
-
+class Province extends Model {}
 
 Province.init({
     code: {
@@ -18,9 +14,9 @@ Province.init({
         allowNull: false
     }
 },{
-    tableName: Province.tableName,
+    tableName: 'provinces',
     sequelize,
-    modelName: Province.modelName,
+    modelName: 'Province',
     timestamps: false
 })
 

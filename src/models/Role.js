@@ -1,10 +1,7 @@
 const { sequelize } = require('../db/sequelize');
 const { DataTypes, Model } = require('sequelize');
 
-class Role extends Model {
-    static tableName = "roles";
-    static modelName = "Role";
-}
+class Role extends Model {}
 
 Role.init({
     id: {
@@ -18,9 +15,9 @@ Role.init({
         allowNull: false
     },
 },{
-    tableName: Role.tableName,
+    tableName: 'roles',
     sequelize,
-    modelName: Role.modelName,
+    modelName: 'Role',
     timestamps: false
 })
 
