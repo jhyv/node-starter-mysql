@@ -1,25 +1,23 @@
 const { sequelize } = require('../db/sequelize');
 const { DataTypes, Model } = require('sequelize');
 
-class Role extends Model {}
+class Province extends Model {}
 
-Role.init({
-    id: {
-        type: DataTypes.BIGINT,
-        autoIncrement: true,
-        primaryKey: true,
+Province.init({
+    code: {
+        type: DataTypes.INTEGER,
+        primaryKey:true,
         allowNull: false
     },
     name: {
         type: DataTypes.STRING,
         allowNull: false
-    },
+    }
 },{
-    tableName: 'roles',
+    tableName: 'provinces',
     sequelize,
-    modelName: 'Role',
+    modelName: 'Province',
     timestamps: false
 })
 
-
-module.exports = Role;
+module.exports = Province;

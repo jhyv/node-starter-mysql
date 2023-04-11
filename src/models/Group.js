@@ -1,9 +1,9 @@
 const { sequelize } = require('../db/sequelize');
 const { DataTypes, Model } = require('sequelize');
 
-class Role extends Model {}
+class Group extends Model {}
 
-Role.init({
+Group.init({
     id: {
         type: DataTypes.BIGINT,
         autoIncrement: true,
@@ -15,11 +15,11 @@ Role.init({
         allowNull: false
     },
 },{
-    tableName: 'roles',
+    tableName: 'groups',
     sequelize,
-    modelName: 'Role',
-    timestamps: false
+    modelName: 'Group',
+    updatedAt: 'updated_at',
+    createdAt:'created_at'
 })
 
-
-module.exports = Role;
+module.exports = Group;

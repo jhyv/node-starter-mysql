@@ -1,5 +1,6 @@
 const { sequelize } = require('../db/sequelize');
 const { DataTypes, Model } = require('sequelize');
+const Employee = require('./Employee');
 const Role = require('./Role');
 
 class User extends Model {}
@@ -37,17 +38,9 @@ User.init({
         references: {
             tableName: 'roles',
             key: 'id',
-            model: Role
+            model: 'Role'
         }
-    },
-    created_at: {
-        type: DataTypes.DATE,
-        allowNull: false
-    },
-    updated_at: {
-        type: DataTypes.DATE,
-        allowNull: false
-    },
+    }
 },{
     tableName: 'users',
     sequelize,
@@ -57,7 +50,15 @@ User.init({
 })
 
 User.belongsTo(Role,{
-    foreignKey: 'role_id'
+    foreignKey: 'role_id',
+    targetKey: 'id',
+    as:'role'
 });
+
+User.hasOne(Employee, {
+    foreignKey: 'user_id',
+    targetKey: 'id',
+    as: 'employee'
+})
 
 module.exports = User;
