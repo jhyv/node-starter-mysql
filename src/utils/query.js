@@ -13,7 +13,7 @@ const paginate = (query, { page, pageSize }) => {
 const getPaginatedData = (params,{ count, rows }) => {
   return {
     current_page: parseInt(params.page),
-    last_page:parseInt(count/parseInt(params.pageSize)) - 1,
+    last_page:parseInt(count/parseInt(params.page_size)) - 1,
     data: rows,
     total: count,
   }
